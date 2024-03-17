@@ -1,5 +1,3 @@
----
----
 <!DOCTYPE HTML>
 <!--
 	Verti by HTML5 UP
@@ -51,10 +49,10 @@
 
 							<!-- Sidebar -->
 							<section>
-								<h2>{{page.title}}</h2>
-								<a href="#" class="image featured"><img src="/images/{{page.image}}" alt="" /></a>
+								<h2>Shed.io</h2>
+								<a href="#" class="image featured"><img src="/images/Shed.png" alt="" /></a>
 								<footer>
-									<a href="{{page.download_link}}" target="_blank" rel="noopener noreferrer"
+									<a href="https://jacob2312.itch.io/shed" target="_blank" rel="noopener noreferrer"
 										class="button icon solid fa-info-circle">Play here!</a>
 								</footer>
 							</section>
@@ -63,16 +61,16 @@
 								<h3>Details</h3>
 								<ul class="game_details">
 									<li>
-										<p>Completed {{page.date | date: "%d %B %Y"}}</p>
+										<p>Completed 20 May 2022</p>
 									</li>
 									<li>
-										<p>Created with {{page.created_with}}</p>
+										<p>Created with Javascript</p>
 									</li>
 									<li>
-										<p>Playable {{page.playable_on}}</p>
+										<p>Playable in Browser</p>
 									</li>
 									<li>
-										<p>{{page.genre}}</p>
+										<p>Playing Card game</p>
 									</li>
 								</ul>
 							</section>
@@ -85,12 +83,17 @@
 							<!-- Content -->
 							<article>
 
-								<h2>{{page.bio}}</h2>
+								<h2>An online multiplayer card game created to advance programming skills</h2>
 								<!--help from https://stackoverflow.com/questions/26395044/jekyll-how-to-split-content-defined-in-md-file-into-separate-elements-->
-								{% assign contentArray = page.content | markdownify | split: "<!--more-->" %}
-								{{contentArray.first}}
+								
+								<p>Shed is an automaton; it is a process that runs until completion. Victory is decided more by the game than the player. Play a game and watch as you have a clear best decision on every turn only to find that using that action will destroy one of your friends. Come to the moral decision of either keeping to the order of the game all falling for human error and breaking the system. In truth, shed is the worst card game ever made.</p>
+
+
 								<h2>Game Background</h2>
-								{{contentArray.last}}
+								
+
+<p>I took a year out from university and decided to expand my programming knowledge by developing an online, multiplayer version of a card game my friends and I used to play. It was a gruelling project, but pushing me outside of my comfort zone helped me learn a variety of tools and languages. Experience gained ranged from server-side development, through learning to use node.js, express and socket.io, to browser development through Javascript and the Phaser framework. It’s not very much fun to play on its own, but if you’re interested give it a try.</p>
+
 							</article>
 
 						</div>
@@ -99,13 +102,13 @@
 				<h2>Screenshots</h2>
 				<div class="row gtr-200">
 					<div class="col-4 col-12-medium imp-medium">
-						<a href="/images/{{page.title}}/{{page.screenshot1}}" class="image screenshot"><img src="/images/{{page.title}}/{{page.screenshot1}}" alt="" /></a>
+						<a href="/images/Shed.io/creechy_screenshot1.jpg" class="image screenshot"><img src="/images/Shed.io/creechy_screenshot1.jpg" alt="" /></a>
 					</div>
 					<div class="col-4 col-12-medium imp-medium">
-						<a href="/images/{{page.title}}/{{page.screenshot2}}" class="image screenshot"><img src="/images/{{page.title}}/{{page.screenshot2}}" alt="" /></a>
+						<a href="/images/Shed.io/creechy_screenshot2.jpg" class="image screenshot"><img src="/images/Shed.io/creechy_screenshot2.jpg" alt="" /></a>
 					</div>
 					<div class="col-4 col-12-medium imp-medium">
-						<a href="/images/{{page.title}}/{{page.screenshot3}}" class="image screenshot"><img src="/images/{{page.title}}/{{page.screenshot3}}" alt="" /></a>
+						<a href="/images/Shed.io/creechy_screenshot3.jpg" class="image screenshot"><img src="/images/Shed.io/creechy_screenshot3.jpg" alt="" /></a>
 					</div>
 				</div>
 			</div>

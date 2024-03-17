@@ -12,7 +12,7 @@
 	<title>Verti by HTML5 UP</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
 </head>
 
 <body class="is-preload left-sidebar">
@@ -24,15 +24,14 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<h1><a href="/index.html">Jacob</a></h1>
+					<h1><a href="index.html">Jacob</a></h1>
 				</div>
 
-				<!-- Nav -->
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Home</a></li>
-						<li><a href="portfolio.html">Portfolio</a></li>
+						<li class="current"><a href="portfolio.html">Portfolio</a></li>
 						<li><a href="cv.html">CV</a></li>
 						<li><a href="about_me.html">About Me</a></li>
 						<li><a href="contact.html">Contact</a></li>
@@ -46,67 +45,87 @@
 		<div id="main-wrapper">
 			<div class="container">
 				<div class="row gtr-200">
-					<div class="col-3 col-12-medium">
+					<div class="col-12 col-12-medium">
 						<div id="sidebar">
 
 							<!-- Sidebar -->
 							<section>
-								<h2>{{page.title}}</h2>
-								<a href="#" class="image featured"><img src="/images/{{page.image}}" alt="" /></a>
-								<footer>
-									<a href="{{page.download_link}}" target="_blank" rel="noopener noreferrer"
-										class="button icon solid fa-info-circle">Play here!</a>
-								</footer>
+								<h2>Completed Games</h2>
+								<h3>Games that I've created and released as a finished product</h3>
 							</section>
 
-							<section>
-								<h3>Details</h3>
-								<ul class="game_details">
-									<li>
-										<p>Completed {{page.date | date: "%d %B %Y"}}</p>
-									</li>
-									<li>
-										<p>Created with {{page.created_with}}</p>
-									</li>
-									<li>
-										<p>Playable {{page.playable_on}}</p>
-									</li>
-									<li>
-										<p>{{page.genre}}</p>
-									</li>
-								</ul>
-							</section>
 
 						</div>
 					</div>
-					<div class="col-9 col-12-medium imp-medium">
-						<div id="content">
 
-							<!-- Content -->
-							<article>
 
-								<h2>{{page.bio}}</h2>
-								<!--help from https://stackoverflow.com/questions/26395044/jekyll-how-to-split-content-defined-in-md-file-into-separate-elements-->
-								{% assign contentArray = page.content | markdownify | split: "<!--more-->" %}
-								{{contentArray.first}}
-								<h2>Game Background</h2>
-								{{contentArray.last}}
+					<!-- Content -->
+					<!--
+					<div class="row gtr-200" id=games>
+						{% for category in site.categories %}
+						<h2 name="{{ category | first }}">{{ category | first }}</h2>
+						{% for post in category.last %}
+						<div class="col-3 col-12-medium imp-medium">
+
+							<article class=game>
+
+								<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+								<a href="{{post.url}}" class="image featured"><img src="images/{{ post.image }}"
+										alt="" /></a>
+								<h1 class="game">Created with {{post.created_with}}</h1>
+								<h1 class="game">Completed {{post.date_to_string}}</h1>
+								<p>{{post.bio}}</p>
+								<button>Read more</button>
+
 							</article>
-
 						</div>
+						{% endfor %}
+
+						{% endfor %}
+						-->
+						{% for post in site.posts %}
+						{% if post.category == "full_project"%}
+						<div class="col-4 col-12-medium imp-medium">
+
+							<article class=game>
+
+								<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+								<a href="{{ post.url }}" class="image featured"><img src="images/{{ post.image }}"
+										alt="" /></a>
+								<h1 class="game">Created with {{post.created_with}}</h1>
+								<h1 class="game">Completed {{post.date | date: "%d %B %Y"}}</h1>
+								<p>{{post.bio}}</p>
+								<a href="{{post.url}}" class="button large icon solid fa-arrow-circle-right">Read More</a>
+
+							</article>
+						</div>
+						{%endif%}
+						{% endfor %}
 					</div>
-				</div>
-				<h2>Screenshots</h2>
-				<div class="row gtr-200">
-					<div class="col-4 col-12-medium imp-medium">
-						<a href="/images/{{page.title}}/{{page.screenshot1}}" class="image screenshot"><img src="/images/{{page.title}}/{{page.screenshot1}}" alt="" /></a>
-					</div>
-					<div class="col-4 col-12-medium imp-medium">
-						<a href="/images/{{page.title}}/{{page.screenshot2}}" class="image screenshot"><img src="/images/{{page.title}}/{{page.screenshot2}}" alt="" /></a>
-					</div>
-					<div class="col-4 col-12-medium imp-medium">
-						<a href="/images/{{page.title}}/{{page.screenshot3}}" class="image screenshot"><img src="/images/{{page.title}}/{{page.screenshot3}}" alt="" /></a>
-					</div>
+
+					<section>
+						<h2>Game Jam Submissions</h2>
+						<h3>Games created in a limited amount of time for an event</h3>
+					</section>
+					{% for post in site.posts %}
+						{% if post.category == "game_jam"%}
+						<div class="col-4 col-12-medium imp-medium">
+
+							<article class=game>
+
+								<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+								<a href="{{ post.url }}" class="image featured"><img src="images/{{ post.image }}"
+										alt="" /></a>
+								<h1 class="game">Created with {{post.created_with}}</h1>
+								<h1 class="game">Completed {{post.date | date: "%d %B %Y"}}</h1>
+								<p>{{post.bio}}</p>
+								<a href="{{post.url}}" class="button large icon solid fa-arrow-circle-right">Read More</a>
+
+							</article>
+						</div>
+						{%endif%}
+					{% endfor %}
+
 				</div>
 			</div>
 		</div>
@@ -201,12 +220,12 @@
 
 	<!-- Scripts -->
 
-	<script src="/assets/js/jquery.min.js"></script>
-	<script src="/assets/js/jquery.dropotron.min.js"></script>
-	<script src="/assets/js/browser.min.js"></script>
-	<script src="/assets/js/breakpoints.min.js"></script>
-	<script src="/assets/js/util.js"></script>
-	<script src="/assets/js/main.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
 
 </body>
 
