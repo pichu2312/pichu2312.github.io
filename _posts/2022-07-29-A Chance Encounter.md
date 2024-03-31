@@ -1,24 +1,30 @@
 ---
 layout: post
-image: Shed.png
-download_link: https://jacob2312.itch.io/shed
+image: chaaaance.png
+download_link: https://jacob2312.itch.io/a-chance-encounter
 
-created_with: Javascript
+created_with: Unity
 playable_on: in Browser
-genre: Playing Card game
+genre: Dating Sim
 
-bio: An online multiplayer card game created to advance programming skills
+bio: The fantasy monster dating game where every choice is random!
 category: game_jam
 
 excerpt_separator: "<!--more-->"
 
-screenshot1: creechy_screenshot1.jpg
-screenshot2: creechy_screenshot2.jpg
-screenshot3: creechy_screenshot3.jpg
+screenshot1: chance3.png
+screenshot2: chance1.png
+screenshot3: chance2.png
 ---
 
-Shed is an automaton; it is a process that runs until completion. Victory is decided more by the game than the player. Play a game and watch as you have a clear best decision on every turn only to find that using that action will destroy one of your friends. Come to the moral decision of either keeping to the order of the game all falling for human error and breaking the system. In truth, shed is the worst card game ever made.
+This is a parody dating simulator visual novel about getting isekai’d into a fantasy world to date monsters and a wizard. This might sound great on paper, but some guy has cursed you, and the dialogue choices are random… 
+
+Pick from a variety of thoughts, both negative and positive, to weigh the odds in your favour! Try to think about their personality, as well as potential ‘genre tropes’, when deciding what options to pick, sometimes it might be surprising. 
 
 <!--more-->
 
-I took a year out from university and decided to expand my programming knowledge by developing an online, multiplayer version of a card game my friends and I used to play. It was a gruelling project, but pushing me outside of my comfort zone helped me learn a variety of tools and languages. Experience gained ranged from server-side development, through learning to use node.js, express and socket.io, to browser development through Javascript and the Phaser framework. It's not very much fun to play on its own, but if you're interested give it a try.
+It was a blazing hot summer and my friends and I wanted to make to do a game jam together, plus we wanted to do a dating game. We were all new to game jams at the time, but I think the final result came out quite successfully. 
+
+Team organisation was the main skill I got to practice during this, making sure the artist and the writers knew what they should be working on to create a completed project on time. Clear communication and setting goals for other members was a must, development needed to be done concurrently and not one after the other. Future projects that involved my collaboration with others went a lot better thanks to what I learned from this event.
+
+A thanks to Hannah Goodliff for doing the art, Eve Butt and Connor Couch for the writing and Rose Summers for helping with the concept.

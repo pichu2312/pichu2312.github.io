@@ -12,9 +12,9 @@ category: game_jam
 
 excerpt_separator: "<!--more-->"
 
-screenshot1: dance1.jpg
-screenshot2: dance2.jpg
-screenshot3: dance3.jpg
+screenshot1: dance1.png
+screenshot2: dance2.png
+screenshot3: dance3.png
 ---
 
 Between the 14th and 17th centuries, there were numerous occurrences of mass hysteria causing groups of people to dance uncontrollably until they collapsed from exhaustion or even death.  Historians are still unsure of the cause.

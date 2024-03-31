@@ -18,28 +18,7 @@
 <body class="is-preload left-sidebar">
 	<div id="page-wrapper">
 
-		<!-- Header -->
-		<div id="header-wrapper">
-			<header id="header" class="container">
-
-				<!-- Logo -->
-				<div id="logo">
-					<h1><a href="index.html">Jacob</a></h1>
-				</div>
-
-				<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li class="current"><a href="portfolio.html">Portfolio</a></li>
-						<li><a href="cv.html">CV</a></li>
-						<li><a href="about_me.html">About Me</a></li>
-						<li><a href="contact.html">Contact</a></li>
-					</ul>
-				</nav>
-
-			</header>
-		</div>
+		{% include header.html current2="current" %}
 
 		<!-- Main -->
 		<div id="main-wrapper">
@@ -83,138 +62,67 @@
 
 						{% endfor %}
 						-->
-						{% for post in site.posts %}
-						{% if post.category == "full_project"%}
-						<div class="col-4 col-12-medium imp-medium">
+					{% for post in site.posts %}
+					{% if post.category == "full_project"%}
+					<div class="col-4 col-12-medium imp-medium">
 
-							<article class=game>
+						<article class=game>
 
-								<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-								<a href="{{ post.url }}" class="image featured"><img src="images/{{ post.image }}"
-										alt="" /></a>
-								<h1 class="game">Created with {{post.created_with}}</h1>
-								<h1 class="game">Completed {{post.date | date: "%d %B %Y"}}</h1>
-								<p>{{post.bio}}</p>
-								<a href="{{post.url}}" class="button large icon solid fa-arrow-circle-right">Read More</a>
+							<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+							<a href="{{ post.url }}" class="image featured"><img src="images/{{ post.image }}"
+									alt="" /></a>
+							<h1 class="game">Created with {{post.created_with}}</h1>
+							<h1 class="game">Completed {{post.date | date: "%d %B %Y"}}</h1>
+							<p>{{post.bio}}</p>
+							<a href="{{post.url}}" class="button large icon solid fa-arrow-circle-right">Read More</a>
 
-							</article>
+						</article>
+					</div>
+					{%endif%}
+					{% endfor %}
+
+
+					<div class="col-12 col-12-medium">
+						<div id="sidebar">
+
+							<!-- Sidebar -->
+							<section>
+								<h2>Game Jam Submissions</h2>
+								<h3>Games created in a limited amount of time for an event</h3>
+							</section>
+
+
 						</div>
-						{%endif%}
-						{% endfor %}
 					</div>
 
-					<section>
-						<h2>Game Jam Submissions</h2>
-						<h3>Games created in a limited amount of time for an event</h3>
-					</section>
 					{% for post in site.posts %}
-						{% if post.category == "game_jam"%}
-						<div class="col-4 col-12-medium imp-medium">
+					{% if post.category == "game_jam"%}
+					<div class="col-4 col-12-medium imp-medium">
 
-							<article class=game>
+						<article class=game>
 
-								<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-								<a href="{{ post.url }}" class="image featured"><img src="images/{{ post.image }}"
-										alt="" /></a>
-								<h1 class="game">Created with {{post.created_with}}</h1>
-								<h1 class="game">Completed {{post.date | date: "%d %B %Y"}}</h1>
-								<p>{{post.bio}}</p>
-								<a href="{{post.url}}" class="button large icon solid fa-arrow-circle-right">Read More</a>
+							<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+							<a href="{{ post.url }}" class="image featured"><img src="images/{{ post.image }}"
+									alt="" /></a>
+							<h1 class="game">Created with {{post.created_with}}</h1>
+							<h1 class="game">Completed {{post.date | date: "%d %B %Y"}}</h1>
+							<p>{{post.bio}}</p>
+							<a href="{{post.url}}" class="button large icon solid fa-arrow-circle-right">Read More</a>
 
-							</article>
-						</div>
-						{%endif%}
+						</article>
+					</div>
+					{%endif%}
 					{% endfor %}
 
 				</div>
 			</div>
 		</div>
+	</div>
 
+	
 		<!-- Footer -->
-		<div id="footer-wrapper">
-			<footer id="footer" class="container">
-				<div class="row">
-					<div class="col-3 col-6-medium col-12-small">
 
-						<!-- Links -->
-						<section class="widget links">
-							<h3>Random Stuff</h3>
-							<ul class="style2">
-								<li><a href="#">Etiam feugiat condimentum</a></li>
-								<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-								<li><a href="#">Sed porttitor cras in erat nec</a></li>
-								<li><a href="#">Felis varius pellentesque potenti</a></li>
-								<li><a href="#">Nullam scelerisque blandit leo</a></li>
-							</ul>
-						</section>
-
-					</div>
-					<div class="col-3 col-6-medium col-12-small">
-
-						<!-- Links -->
-						<section class="widget links">
-							<h3>Random Stuff</h3>
-							<ul class="style2">
-								<li><a href="#">Etiam feugiat condimentum</a></li>
-								<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-								<li><a href="#">Sed porttitor cras in erat nec</a></li>
-								<li><a href="#">Felis varius pellentesque potenti</a></li>
-								<li><a href="#">Nullam scelerisque blandit leo</a></li>
-							</ul>
-						</section>
-
-					</div>
-					<div class="col-3 col-6-medium col-12-small">
-
-						<!-- Links -->
-						<section class="widget links">
-							<h3>Random Stuff</h3>
-							<ul class="style2">
-								<li><a href="#">Etiam feugiat condimentum</a></li>
-								<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-								<li><a href="#">Sed porttitor cras in erat nec</a></li>
-								<li><a href="#">Felis varius pellentesque potenti</a></li>
-								<li><a href="#">Nullam scelerisque blandit leo</a></li>
-							</ul>
-						</section>
-
-					</div>
-					<div class="col-3 col-6-medium col-12-small">
-
-						<!-- Contact -->
-						<section class="widget contact">
-							<h3>Contact Us</h3>
-							<ul>
-								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a>
-								</li>
-								<li><a href="#" class="icon brands fa-facebook-f"><span
-											class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram"><span
-											class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a>
-								</li>
-								<li><a href="#" class="icon brands fa-pinterest"><span
-											class="label">Pinterest</span></a></li>
-							</ul>
-							<p>1234 Fictional Road<br />
-								Nashville, TN 00000<br />
-								(800) 555-0000</p>
-						</section>
-
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<div id="copyright">
-							<ul class="menu">
-								<li>&copy; Untitled. All rights reserved</li>
-								<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</footer>
-		</div>
+		{% include footer.html %}
 
 	</div>
 

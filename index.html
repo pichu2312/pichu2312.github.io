@@ -1,253 +1,226 @@
+---
+---
 <!DOCTYPE HTML>
-<script src="global_functions.js" type="text/javascript"></script> 
+<script src="global_functions.js" type="text/javascript"></script>
 <!--
 	Verti by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<!--
+
+<head>
+	<!--
 		<title>Verti by HTML5 UP</title>
 		-->
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		
-	</head>
-	<body class="is-preload homepage">
-		<div id="page-wrapper">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
 
-			<!-- Header -->
-				<div id="header-wrapper">
-					<header id="header" class="container">
+</head>
 
-						<!-- Logo -->
-							
-						<div id="logo">
-							<h1><a href="index.html">Jacob</a></h1>
-						</div>
-						
+<body class="is-preload homepage">
+	<div id="page-wrapper">
 
-						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li class="current"><a href="index.html">Home</a></li>
-									<li><a href="portfolio.html">Portfolio</a></li>
-									<li><a href="cv.html">CV</a></li>
-									<li><a href="about_me.html">About Me</a></li>
-									<li><a href="contact.html">Contact</a></li>
-								</ul>
-							</nav>
+		<!-- Header -->
+		{% include header.html current1="current" %}
 
-					</header>
-				</div>
 
-			<!-- Banner -->
-				<div id="banner-wrapper">
-					<div id="banner" class="box container">
-						<div class="row">
-							<div class="col-7 col-12-medium">
-								<h2>Jacob Bradford</h2>
-								<p>An experienced programmer and avid game designer</p>
-							</div>
-							<div class="col-5 col-12-medium">
-								<ul>
-									<li><a href="portfolio.html" class="button large icon solid fa-arrow-circle-right">Portfolio</a></li>
-									<li><a href="contact.html" class="button alt large icon solid fa-envelope">Contact</a></li>
-								</ul>
-							</div>
-						</div>
+		<!-- Banner -->
+		<div id="banner-wrapper">
+			<div id="banner" class="box container">
+				<div class="row">
+					<div class="col-7 col-12-medium">
+						<h2>Jacob Bradford</h2>
+						<p>An experienced programmer and avid game designer</p>
+					</div>
+					<div class="col-5 col-12-medium">
+						<ul>
+							<li><a href="portfolio.html"
+									class="button large icon solid fa-arrow-circle-right">Portfolio</a></li>
+							<li><a href="contact.html" class="button alt large icon solid fa-envelope">Contact</a></li>
+						</ul>
 					</div>
 				</div>
-
-			<!-- Features -->
-				<div id="features-wrapper">
-
-					<div class="container">
-						<h2>Featured Projects</h2>
-						<div class="row">
-
-							<div class="col-4 col-12-medium">
-
-								<!-- Box -->
-									<section class="box feature">
-										<a href="#" class="image featured"><img src="images/Creechy.png" alt="" /></a>
-										<div class="inner">
-											<header>
-												<h2><a href="">Creechymon</a></h2>
-											</header>
-											<p>A disturbing text-based adventure in a world inspired by Pokemon</p>
-
-										</div>
-									</section>
-
-							</div>
-							<div class="col-4 col-12-medium">
-
-								<!-- Box -->
-								<section class="box feature">
-									<a href="#" class="image featured"><img src="images/fish.png" alt="" /></a>
-									<div class="inner">
-										<header>
-											<h2><a href="">Fish And Sleep</a></h2>
-										</header>
-										<p>Dissertation project that explored a gameified app's effect on sleep cycles</p>
-
-									</div>
-								</section>
-
-							</div>
-							<div class="col-4 col-12-medium">
-
-								<!-- Box -->
-								<section class="box feature">
-									<a href="#" class="image featured"><img src="images/shed.png" alt="" /></a>
-									<div class="inner">
-										<header>
-											<h2><a href="">Shed.io</a></h2>
-										</header>
-										<p>An online multiplayer card game created to push my abilities</p>
-
-									</div>
-								</section>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-			<!-- Main -->
-				<div id="main-wrapper">
-					<div class="container">
-						<div class="row gtr-200">
-							<div class="col-4 col-12-medium">
-
-								<!-- Sidebar -->
-									<div id="sidebar">
-										<section class="widget thumbnails">
-											<h3>Gamejam projects</h3>
-											<div class="grid">
-												<div class="row gtr-50">
-													<div class="col-6"><a href="#" class="image fit"><img src="images/dancingmania.png" alt="" /></a></div>
-													<div class="col-6"><a href="#" class="image fit"><img src="images/chaaaance.png" alt="" /></a></div>
-													<div class="col-6"><a href="#" class="image fit"><img src="images/theyrem.png" alt="" /></a></div>
-													<div class="col-6"><a href="#" class="image fit"><img src="images/radiodj.png" alt="" /></a></div>
-												</div>
-											</div>
-											<a href="#" class="button icon fa-file-alt">More</a>
-										</section>
-									</div>
-
-							</div>
-							<div class="col-8 col-12-medium imp-medium">
-
-								<!-- Content -->
-									<div id="content">
-										<section class="last">
-											<h2>Background</h2>
-											<p id = "background1"><p>Heyo, I'm <strong>Jacob</strong>, I'm a hobbyist game programmer and designer looking to break into the industry. I graduated from the University of Birmingham in 2023 with <strong>first-class</strong> honours in Computer Science, since then I've been working on personal game projects whilst being an IT volunteer at a local heritage site. </p>
-										</p>
-											<p>I have a passion for creating games and have been doing it for nearly a decade working in <strong>Unity, Game Maker Studio, Android, Javascript</strong> and more. Using my free time to cultivate skills is an important principle I follow and has led to my continued growth after graduating.</p>
-											<a href="	#" class="button icon solid fa-arrow-circle-right">More Details</a>
-										</section>
-									</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-			<!-- Footer -->
-				<div id="footer-wrapper">
-					<footer id="footer" class="container">
-						<div class="row">
-							<div class="col-3 col-6-medium col-12-small">
-
-								<!-- Links -->
-									<section class="widget links">
-										<h3>Random Stuff</h3>
-										<ul class="style2">
-											<li><a href="#">Etiam feugiat condimentum</a></li>
-											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-											<li><a href="#">Sed porttitor cras in erat nec</a></li>
-											<li><a href="#">Felis varius pellentesque potenti</a></li>
-											<li><a href="#">Nullam scelerisque blandit leo</a></li>
-										</ul>
-									</section>
-
-							</div>
-							<div class="col-3 col-6-medium col-12-small">
-
-								<!-- Links -->
-									<section class="widget links">
-										<h3>Random Stuff</h3>
-										<ul class="style2">
-											<li><a href="#">Etiam feugiat condimentum</a></li>
-											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-											<li><a href="#">Sed porttitor cras in erat nec</a></li>
-											<li><a href="#">Felis varius pellentesque potenti</a></li>
-											<li><a href="#">Nullam scelerisque blandit leo</a></li>
-										</ul>
-									</section>
-
-							</div>
-							<div class="col-3 col-6-medium col-12-small">
-
-								<!-- Links -->
-									<section class="widget links">
-										<h3>Random Stuff</h3>
-										<ul class="style2">
-											<li><a href="#">Etiam feugiat condimentum</a></li>
-											<li><a href="#">Aliquam imperdiet suscipit odio</a></li>
-											<li><a href="#">Sed porttitor cras in erat nec</a></li>
-											<li><a href="#">Felis varius pellentesque potenti</a></li>
-											<li><a href="#">Nullam scelerisque blandit leo</a></li>
-										</ul>
-									</section>
-
-							</div>
-							<div class="col-3 col-6-medium col-12-small">
-
-								<!-- Contact -->
-									<section class="widget contact last">
-										<h3>Contact Us</h3>
-										<ul>
-											<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-											<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-											<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-											<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-											<li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
-										</ul>
-										<p>1234 Fictional Road<br />
-										Nashville, TN 00000<br />
-										(800) 555-0000</p>
-									</section>
-
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div id="copyright">
-									<ul class="menu">
-										<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</footer>
-				</div>
-
 			</div>
+		</div>
 
-		<!-- Scripts -->
+		<!-- Features -->
+		<div id="features-wrapper">
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<div class="container">
+				<h2>Featured Projects</h2>
+				<div class="row">
 
-	</body>
+					<div class="col-4 col-12-medium">
+
+						<!-- Box -->
+						<section class="box feature">
+							<a href="{% post_url 2024-03-09-Creechymon%}" class="image featured"><img src="images/Creechy.png" alt="" /></a>
+							<div class="inner">
+								<header>
+									<h2><a href="{% post_url 2024-03-09-Creechymon%}">Creechymon</a></h2>
+								</header>
+								<p>A disturbing text-based adventure in a world inspired by Pokemon</p>
+
+							</div>
+						</section>
+
+					</div>
+					<div class="col-4 col-12-medium">
+
+						<!-- Box -->
+						<section class="box feature">
+							<a href="{% post_url 2023-04-11-Fish and Sleep%}" class="image featured"><img src="images/fish.png" alt="" /></a>
+							<div class="inner">
+								<header>
+									<h2><a href="{% post_url 2023-04-11-Fish and Sleep%}">Fish And Sleep</a></h2>
+								</header>
+								<p>Dissertation project that explored a gameified app's effect on sleep cycles</p>
+
+							</div>
+						</section>
+
+					</div>
+					<div class="col-4 col-12-medium">
+
+						<!-- Box -->
+						<section class="box feature">
+							<a href="{% post_url 2022-05-20-Shed.io %}" class="image featured"><img src="images/shed.png" alt="" /></a>
+							<div class="inner">
+								<header>
+									<h2><a href="{% post_url 2022-05-20-Shed.io %}">Shed.io</a></h2>
+								</header>
+								<p>An online multiplayer card game created to advance programming skills</p>
+
+							</div>
+						</section>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main -->
+		<div id="banner-wrapper">
+			<div class="box container">
+				<div class="row gtr-200">
+					<div class="col-4 col-12-medium">
+
+						<!-- Sidebar -->
+						<div id="sidebar">
+							<section class="widget thumbnails">
+								<h3>Gamejam projects</h3>
+								<div class="grid">
+									<div class="row gtr-50">
+										<div class="col-6"><a href="{% post_url 2024-01-27-Dancing Mania %}" class="image fit"><img
+													src="images/dancingmania.png" alt="" /></a></div>
+										<div class="col-6"><a href="{% post_url 2022-07-29-A Chance Encounter %}"  class="image fit"><img src="images/chaaaance.png"
+													alt="" /></a></div>
+										<div class="col-6"><a href="{% post_url 2023-05-21-They Will Remember Them %}"  class="image fit"><img src="images/theyrem.png"
+													alt="" /></a></div>
+										<div class="col-6"><a href="{% post_url 2023-06-13-Radio DJ 2026 %}"  class="image fit"><img src="images/radiodj.png"
+													alt="" /></a></div>
+									</div>
+
+								</div>
+								<a href="portfolio.html" class="button icon solid fa-file-alt">See All</a>
+
+							</section>
+
+						</div>
+
+					</div>
+					<div class="col-8 col-12-medium imp-medium">
+
+						<!-- Content -->
+						<div id="content">
+							<section class="last">
+								<h2>Background</h2>
+								<p id="background1">
+								<p>Heyo, I'm <strong>Jacob</strong>, I'm a hobbyist game programmer and designer looking
+									to break into the industry. I graduated from the University of Birmingham in 2023
+									with <strong>first-class honours in Computer Science</strong>, since then I've been
+									working on personal game projects whilst being an <b>IT volunteer at a cultural
+										heritage site.</b> </p>
+								</p>
+								<p>I have a passion for creating games and have been doing it for nearly a decade
+									creating games in <strong>Unity, Game Maker Studio, Android Studio,
+										Javascript</strong> and more. Using my free time to cultivate the skills I have
+									is an important principle I follow and has led to my continued growth after
+									graduating.</p>
+								<a href="about_me.html" class="button icon solid fa-arrow-circle-right">Further Information</a>
+							</section>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Features -->
+		<div id="banner">
+			<div class="box container">
+
+				<h2>Programming Skills</h2>
+				<h3>Skills in bold are ones I would consider myself proficent in</h3>
+				<div class="row gtr-200">
+					<div class="col-4 col-12-medium iimp-medium">
+						<h2>Languages</h2>
+						{% for skill in site.skills %}
+						{% if skill.type == "language" %}
+						{% if skill.experienced == true %}
+						<li><b>{{skill.name}}</b></li>
+						{% else %}
+						<li>{{skill.name}}</li>
+						{% endif %}
+						{% endif %}
+						{% endfor %}
+
+
+					</div>
+					<div class="col-4 col-12-medium imp-medium">
+						<h2>Engines</h2>
+						{% for skill in site.skills %}
+						{% if skill.type == "engine" %}
+						{% if skill.experienced == true %}
+						<li><b>{{skill.name}}</b></li>
+						{% else %}
+						<li>{{skill.name}}</li>
+						{% endif %}
+						{% endif %}
+						{% endfor %}
+					</div>
+					<div class="col-4 col-12-medium imp-medium">
+						<h2>Other</h2>
+						{% for skill in site.skills %}
+						{% if skill.type == "other" %}
+						{% if skill.experienced == true %}
+						<li><b>{{skill.name}}</b></li>
+						{% else %}
+						<li>{{skill.name}}</li>
+						{% endif %}
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% include footer.html %}
+
+
+	<!-- Scripts -->
+
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+
 </html>
