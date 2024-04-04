@@ -12,9 +12,9 @@ category: game_jam
 
 excerpt_separator: "<!--more-->"
 
-screenshot1: chance3.png
-screenshot2: chance1.png
-screenshot3: chance2.png
+screenshot1: chance3.PNG
+screenshot2: chance1.PNG
+screenshot3: chance2.PNG
 ---
 
 This is a parody dating simulator visual novel about getting isekai’d into a fantasy world to date monsters and a wizard. This might sound great on paper, but some guy has cursed you, and the dialogue choices are random… 

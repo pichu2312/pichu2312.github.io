@@ -12,9 +12,9 @@ category: game_jam
 
 excerpt_separator: "<!--more-->"
 
-screenshot1: theyrem1.png
-screenshot2: theyrem2.png
-screenshot3: theyrem3.png
+screenshot1: theyrem1.PNG
+screenshot2: theyrem2.PNG
+screenshot3: theyrem3.PNG
 ---
 
 You awake in a dark cavern. You feel cold, and hungry, and lost, and unwell, and you don't if there's anywhere else to go. You can’t see your hands and you can’t feel your lips, yet you feel as though you can still act and that you can still speak. You understand this is your last moment, you need to impart some knowledge or else you'll never exist. You feel as though you can create new life now, they will hear, and they will repeat, so be careful what words you choose. 

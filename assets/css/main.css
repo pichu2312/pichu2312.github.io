@@ -2099,6 +2099,17 @@ ul.menu li:first-child {
 	margin: 0 0 0 1.25em;
 }
 
+/* Tab */
+.tab {
+	overflow: hidden;
+	border: 0px;
+  }
+
+.tabcontent {
+	display: none;
+	padding: 14px;
+  }
+
 /* Nav */
 
 #nav {

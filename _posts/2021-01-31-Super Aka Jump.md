@@ -11,9 +11,9 @@ category: game_jam
 
 excerpt_separator: "<!--more-->"
 
-screenshot1: aka1.png
-screenshot2: aka2.png
-screenshot3: aka3.png
+screenshot1: aka1.PNG
+screenshot2: aka2.PNG
+screenshot3: aka3.PNG
 ---
 
 Control Aka the Red Panda, our loveable protagonist, and help him take back his forest from the evil Booker Gang! The Booker Gang have built a library in Aka’s Bamboo forest, disturbing his peace. Use the collectables, to power yourself up, and reclaim the ground Aka has lost in this crazy adventure! 
