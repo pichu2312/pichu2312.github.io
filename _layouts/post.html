@@ -5,4 +5,67 @@ layout: default
 <a href="{{ "/" | relative_url }}">{{ site.theme_config.back_home_text }}</a>
 <h1 class="post-title">{{ page.title }}</h1>
 {% include date_and_social_share.html %}
-{{ content }}
+{% assign contentArray = page.content | markdownify | split: "<!--more-->" %}
+{{contentArray.first}}
+<h2>Game Background</h2>
+{{contentArray.last}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">.col-lg-4</div>
+        <div class="col-sm-4">.col-lg-4</div>
+        <div class="col-sm-4">.col-lg-4</div>
+    </div>
+</div>
+
+<div class="row gtr-200">
+    <div class="col-3 col-12-medium">
+        <div id="sidebar">
+
+            <!-- Sidebar -->
+            <section>
+                <h2>{{page.title}}</h2>
+                <a href="#" class="image featured"><img src="/images/{{page.image}}" alt="" /></a>
+                <footer>
+                    <a href="{{page.download_link}}" target="_blank" rel="noopener noreferrer"
+                        class="button icon fa-play-circle">Play here!</a>
+                </footer>
+            </section>
+
+            <section>
+                <h3>Details</h3>
+                <ul class="game_details">
+                    <li>
+                        <p>Completed {{page.date | date: "%d %B %Y"}}</p>
+                    </li>
+                    <li>
+                        <p>Created with {{page.created_with}}</p>   
+                    </li>
+                    <li>
+                        <p>Playable {{page.playable_on}}</p>
+                    </li>
+                    <li>
+                        <p>{{page.genre}}</p>
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+    </div>
+    <div class="col-9 col-12-medium imp-medium">
+        <div id="content">
+
+            <!-- Content -->
+            <article>
+
+                <h2>{{page.bio}}</h2>
+                <!--help from https://stackoverflow.com/questions/26395044/jekyll-how-to-split-content-defined-in-md-file-into-separate-elements-->
+                {% assign contentArray = page.content | markdownify | split: "<!--more-->" %}
+                {{contentArray.first}}
+                <h2>Game Background</h2>
+                {{contentArray.last}}
+            </article>
+
+        </div>
+    </div>
+</div>

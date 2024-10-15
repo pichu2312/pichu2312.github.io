@@ -1,19 +1,33 @@
 <ul>
-  {% for item in include.collection %}
+    {% for item in include.collection %}
+    {% if item.type == "first"%}
+    <button onclick="showMore()" id="moreButton">Read more</button></button>
+    {% endif %}
+    <span id="more" style = "display: none;"> 
     <li>
-    {% if item.url != false %}
-      <a href="{{ item.url }}">{{ item.title }}</a>
-    {% else %}
-      {{ item.title }}
-    {% endif %}
-
-    {% if item.post_list == true %}
-      {% include post_list.html %}
-    {% endif %}
+    {{item.name}}
 
     {% if item.entries %}
       {% include vertical_list.html collection=item.entries %}
+
     {% endif %}
+  </span>
     </li>
   {% endfor %}
+
 </ul>
+
+<script>
+  function showMore() {
+    var moreText = document.getElementById("more");
+    var btnText = document.getElementById("moreButton");
+  
+    if (btnText.innerHTML === "Read less") {
+      btnText.innerHTML = "Read more"; 
+      moreText.style.display = "none";
+    } else {
+      btnText.innerHTML = "Read less"; 
+      moreText.style.display = "inline";
+    }
+  }
+  </script>

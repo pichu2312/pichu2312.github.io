@@ -1,8 +1,7 @@
-title: Moonwalk
-author: Abhinav Saxena
+title: Portfolio of Jacob Bradford
+author: Jacob Bradford
 url: https://www.abhinavsaxena.com/moonwalk # root address of the site
-description: > # description of the site (multiple lines allowed)
-  Moonwalk is a fast and elegant Jekyll theme with a clean dark mode. It comes with horizontal list (for navbar and footer), card list (for portfolio), and a generic vertical list. It is very easy to modify in case you want to build over it - please see _layouts/home.html to do that.
+description:  # description of the site (multiple lines allowed)
 
 permalink: /:slug
 
@@ -28,7 +27,7 @@ theme_config:
   show_projects: true # show projects as cards, add in _data/home.yml
   show_blog: true # show blog posts added in _posts
   show_old_projects: true # show old projects as cards, add in _data/home.yml
-  show_misc_list: false # show generic vertical list for misc details, add _data/home.yml
+  show_misc_list: true # show generic vertical list for misc details, add _data/home.yml
   show_reading_time: true # show number of words and reading time in the blog posts
   show_tags: true # show tags in a blog posts
   # options for "home" page
@@ -39,7 +38,7 @@ theme_config:
     title_old_projects: Old Projects
 
 soopr:
-  publish_token: "" # sign up at https://www.soopr.co to get your publish token and personalize share and reaction options
+  publish_token: "pt_e13843bbe541597f4d814f6db423db29" # sign up at https://www.soopr.co to get your publish token and personalize share and reaction options
 
 highlighter: rouge
 

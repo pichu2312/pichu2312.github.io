@@ -1,70 +1,107 @@
 navbar_entries:
-  - title: about
-    url: about
+  - title: home
+    url: index
 
-  - title: blog
-    url: blog
+  - title: portfolio
+    url: portfolio
 
-  - title: website
-    url: https://www.abhinav.co
+  - title: cv
+    url: cv
 
-project_entries:
-  - title: Project 1
-    url: overview-post
-    desc: This is an example project, configured in _data/home.yml
+  - title: about me
+    url: about_me
 
-  - title: Project 2
-    url: overview-post
-    desc: Projects are shown in card layout
-
-  - title: Project 3
-    url: overview-post
-    desc: You can control visibility from _config.yml file
-
-  - title: Project 4
-    url: overview-post
-    desc: This project uses highlight markup, configured in _data/home.yml
-    highlight: WIP
-
-  - title: Project 5
-    url: overview-post
-    desc: Moonwalk also has horizontal list (used in header and footer)
-    highlight: WIP
-
-  - title: Project 6
-    url: overview-post
-    desc: It also has a scalable vertical list (in case you need it)
-
-old_project_entries:
-  - title: Soopr
-    url: https://www.soopr.co
-    desc: Delight your readers - add beautiful share and like buttons easily to your websites 
-    highlight: NEW
-
-  - title: Cookie
-    url: https://github.com/abhinavs/cookie
-    desc: An open source landing website with supporting pages and integrated blog
-
-  - title: Moonwalk
-    url: https://github.com/abhinavs/moonwalk
-    desc: A fast and minimalist Jekyll blog theme with clean dark mode
-
-  - title: Humangous
-    url: https://www.humangous.co
-    desc: The better people know you, the better they collaborate
+  - title: contact
+    url: contact
 
 footer_entries:
-  - title: abhinav's homepage
-    url: https://www.abhinav.co
-
   - title: twitter
-    url: https://twitter.com/abhinav
+    url: https://x.com/JacobB24646
+    icon: icon brands fa-twitter
 
   - title: github
-    url: https://github.com/abhinavs
+    url: https://github.com/pichu2312
+    icon: icon brands fa-github
 
-  - title: feed
-    url: feed.xml
+  - title: itch.io
+    url: https://jacob2312.itch.io/
+    icon: fab fa-itch-io
+
+  - title: linkedin
+    url: https://www.linkedin.com/in/jacob-bradford-064b27274/
+    icon: icon brands fa fa-linkedin
+
+  - title: tumblr
+    url: https://www.tumblr.com/loadofoldjuk
+    icon: icon brands fa-tumblr-square
+
+skills:
+  - name: Engines
+    type: first
+    experienced: false
+    entries:
+        - name: Android Studio
+          type: engine
+          experienced: true
+        - name: Gamemaker Studio 1/2
+          type: title
+        - name: Godot
+          type: title
+          experienced: false
+          experienced: false
+        - name: Unity
+          type: title
+          experienced: false
+        - name: Unreal
+          type: title
+          experienced: false
+  - name: Languages
+    type: title
+    experienced: false
+    entries:
+      - name: C#
+        type: title
+        experienced: false
+      - name: C++
+        type: title
+        experienced: false
+      - name: CSS
+        type: title
+        experienced: false
+      - name: Haskell
+        type: title
+        experienced: false
+      - name: HTML
+        type: title
+        experienced: false
+      - name: Java
+        type: title
+        experienced: false
+      - name: Javascript
+        type: title
+        experienced: false
+      - name: PHP
+        type: title
+        experienced: false
+      - name: Python
+        type: title
+        experienced: false
+      - name: SQL
+        type: title
+        experienced: false
+  - name: Other
+    type: title
+    experienced: false
+    entries:  
+      - name: Aseprite
+        type: title
+        experienced: false
+      - name: Retool
+        type: title
+        experienced: false
+      - name: Wordpress
+        type: title
+        experienced: false
 
 misc_entries:
   - title: this is an example vertical list

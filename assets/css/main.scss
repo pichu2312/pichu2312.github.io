@@ -3,4 +3,18 @@
 
 @import "moonwalk";
 @import "list";
-@import "syntax";
+@import "syntax";   
+
+.codebox {
+    background-color: black;
+    padding: 5%;
+
+}
+
+code {
+    color: white;
+}
+
+.more {
+    display: none;
+}

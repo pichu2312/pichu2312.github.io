@@ -1,26 +1,29 @@
 <ul class="horizontal-list">
-  {% for item in include.collection %}
-
+  {% for post in site.posts %}
+  {% if post.category == include.collection%}
     <li class="card">
-      <a href="{{ item.url }}">
+      <a href="{{ post.url }}">
         <span class="header">
-          {{ item.title }}
+          {{ post.title }}
 
-          {% if item.highlight %}
-            <mark>{{ item.highlight }}</mark>
+          {% if post.highlight %}
+            <mark>{{ post.highlight }}</mark>
           {% endif %}
 
         </span>
 
         <hr />
 
-        {% if item.desc != false %}
+        {% if post.bio != false %}
         <p class="body">
-          {{ item.desc }}
+          {{ post.bio }}
         </p>
+        <a href={{post.url}} class="image featured"><img src={{ "images/" | append: post.image }}/></a>
+        <h2>{% assign new_var = "images/" | append: post.image %}</h2>
+
         {% endif %}
       </a>
     </li>
-
+  {% endif %}
   {% endfor %}
 </ul>
