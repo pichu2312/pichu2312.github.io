@@ -5,16 +5,136 @@
 @import "list";
 @import "syntax";   
 
-.codebox {
+.backlink {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.card .header {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+a.button {
+    border: 1px outset buttonborder;
+    border-radius: 3px;
+    background: var(--bg-secondary);
+    text-decoration: none;
+    padding: 10px 15px;
+    cursor: pointer;
+
+}
+
+//Images
+.imagegallery {
+    display:inline-block;
+}
+
+.image.featured {
+    display: inline-block;
+	width: 100%;
+}
+
+.background {
+    display: inline-block;
+}
+
+//Tab stuff
+.tab {
+    overflow: hidden;
+
+  }
+
+  /* Create an active/current tablink class */
+.button.active {
+    background: var(--highlight);
+    color: black;
+
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+  }
+
+
+  .codebox {
     background-color: black;
-    padding: 5%;
+    padding: 15%, 0%;
+    overflow: visible;
 
-}
+    }
 
-code {
-    color: white;
-}
+    code {
+        color: white;
+    }
+
+//Code for expandables taken from https://www.youtube.com/watch?v=2wQxF7gTcFo&t=301s&ab_channel=OnlineTutorials
+
 
 .more {
     display: none;
 }
+
+.expandable .content {
+    position: relative;
+
+    width: 100%;
+    flex-wrap: wrap;
+    height: 315px;
+    overflow: hidden;
+}
+
+.expandable .content::before {
+    position: absolute;
+    background: linear-gradient(transparent, var(--bg));
+    width: 100%;
+    height: 120px;
+    bottom: 0;
+    left: 0;
+    content: '';
+}
+
+.expandable .more {
+    /*
+    position: relative;
+    padding: 10px 15px;
+    background: var(--bg-secondary)   ;
+    margin-top: 15px;
+    display: inline-block;
+    */
+    border: 1px outset buttonborder;
+    border-radius: 3px;
+    background: var(--bg-secondary);
+    text-decoration: none;
+    padding: 5px 15px;
+    cursor: pointer;
+
+    display: inline-block;
+    position: relative;
+
+}
+
+.expandable .more::before {
+    content: 'Show';   
+}
+
+
+//After expansion
+.expandable.active .more {
+    background: var(--highlight);
+    color: black;
+}
+
+.expandable.active .more::before {
+    content: 'Hide';   
+}
+
+.expandable.active .content {
+    height: auto;
+}
+
+.expandable.active .content::before {
+    display: none;
+}
+

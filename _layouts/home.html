@@ -29,203 +29,36 @@ layout: default
 <div>
 <h2>Showcase</h2>
 {% include card_list.html collection="full_project" %}
-<button type = "button"><a href = "/portfolio">See all</a></button>
+<a class = "button" href = "/portfolio">See all</a>
 </div>
-
-<div>
+<div class="expandable">
 <h2>Skills</h2>
+<div class="content">
 {% include vertical_list.html collection=site.data.home.skills %}
 </div>
+<a class = "more"></a>
+</div>
 
-<div>
+
+<div class="expandable">
 <h2 >Code Snippet</h2>
-<pre class = "codebox">
-  <code>
-public class scr_npc : MonoBehaviour
-{
-    //Variables for performing combos
-    [SerializeField] protected int comboIndex;
-    Combo comboVal;
-    public SpriteRenderer icon;
-
-    //Designate the movement modes of the NPC
-    public enum Movement {
-        Following,
-        Dying,
-        None
-    }
-    private Movement currentMovement = Movement.None;
-
-    //Movement variables, a random valyue is selected at random intervals
-    [SerializeField, Range(0.1f, 0.25f)] 
-    public float maxSpeed = 0.2f;
-
-    [SerializeField, Range(0.01f, 0.1f)] 
-    protected float minSpeed = 0.05f;
-    [SerializeField] protected float maxVar; //Variable variance!
-    protected (float, float) var;
-
-    protected float currentSpeed;
-    protected Vector3 target; //Point the NPC is moving towards
-        
-    int depth;
-
-
-    //References to other objects
-    protected GameObject p;
-    protected scr_player player;
-    protected Transform player_pos;
-
-
-    //References to other components on the NPC
-    public SpriteRenderer sprite;
-    public SpriteRenderer shadow;
-
-
-    //Variables used in animating the sprite's bobbing animation
-    public Transform iconTrans;
-    public Transform spriteTrans;
-    protected float aniSpeed;
-    [SerializeField] protected float pointToReach;
-    protected float baseX;
-    protected float baseY;
-    protected int upOrDown = 1;
-
-    //Variables used in animating the sprite's frames
-    [SerializeField] float maxAniSpeed;
-    protected int time = 0;
-    public Animator animator;
-    
-
-    //Getters and setters
-    public int Cv { get => comboIndex; set => comboIndex = value; }
-    public Movement CurrentMovement { get => currentMovement; set => currentMovement = value; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Generate a combo needed to recruit this npc within the range of possible combos the player will have unlocked at this point
-        if (comboIndex >= 0)
-        {
-            comboIndex = Random.Range(0, Cv);
-            comboVal = db_combo.findCombo(comboIndex);
-            icon.sprite = comboVal.Image;
-
-            //Chance to flip the sprite around
-            if (Random.Range(0, 2) == 1)
-            {
-
-                transform.localScale = new Vector2(-1, 1);
-                iconTrans.localScale = new Vector2(-1, 1);
-            }
-
-
-
-        }
-
-        //Get player variables
-        p = GameObject.FindWithTag("player");
-        player = p.GetComponent<scr_player>();
-        player_pos = p.GetComponent<Transform>();
-
-        //Only the chaser npc needs this
-        if (GetType() == typeof(scr_chaser_npc)) {
-            AIDestinationSetter dest = GetComponent<AIDestinationSetter>();
-
-            if (dest != null)
-            {
-                dest.target = player_pos;
-            }
-        }
-
-        //Initial variables
-        baseX = spriteTrans.localPosition.x;
-        baseY = spriteTrans.localPosition.y;
-        aniSpeed = maxAniSpeed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        switch (CurrentMovement) {
-            case Movement.Dying: break;
-            case Movement.Following: 
-                target = new Vector3(player_pos.position.x + var.Item1, player_pos.position.y + var.Item2, 0);
-
-                if (target == transform.position)
-                {
-                    updateMovement();
-                }
-                else
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, target, currentSpeed);
-                }
-
-                bobSprite();
-            break;
-            case Movement.None: 
-                bobSprite();
-            break;
-
-        }
-
-        //Update the order in layer
-        depth = Mathf.RoundToInt(-shadow.transform.position.y * 100f);
-        sprite.sortingOrder = depth;
-        shadow.sortingOrder = depth;
-    }
-
-    //Update the movement by providing a random speed and a random direction
-    public void updateMovement()
-    {
-        currentSpeed = Random.Range(minSpeed, maxSpeed);
-        float inc = player.CurrentIncrease;
-
-        var = (Random.Range(-maxVar * inc, maxVar * inc), Random.Range(-maxVar * inc, maxVar * inc));
-    }
-
-    //Triggered after being recruited
-    public void beginFollowing()
-    {
-        Debug.Log("NPC with id " + comboIndex + "s  tarted following!");
-
-
-        CurrentMovement = Movement.Following;
-        Destroy(icon);
-        updateMovement();
-
-        //Only special NPCs have a dance animation
-        if (animator != null) {
-            animator.enabled = true;
-        }
-    }
-
-    //Only does performs code for the chaser npc inherited class
-    protected virtual void bobSprite()
-    {
-    }
-
-
-    //Collision properties
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if ((collision.isTrigger) && (CurrentMovement == Movement.None))
-        {
-            player.addToNPCList(this);
-        }
-    }
-
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        if ((collision.isTrigger) && (CurrentMovement == Movement.None))
-        {
-            player.removeFromNPCList(this);
-        }
-    }
-}
-  </code>
-</pre>
+<div class="content">
+<p>Here's a look at how I code through an NPC class I wrote for my 2024 gamejam submission 'Dancing Mania'. Players need to perform a combo to recruit NPCs who proceed to circle and dance around the player. Two classes inherit from this; aggressive attackers who chase the player and special NPCs who have dialogue. </p>
+<div class = "codebox">
+{% include code2.html %}
+</div>
+</div>
+<a class = "more"></a>
 </div>
 
 {% include bottom_bar.html %}
 
+<script>
+    let more = document.querySelectorAll('.more')
+    for (let i = 0; i < more.length; i++) {
+        more[i].addEventListener('click', function(){
+            more[i].parentNode.classList    .toggle('active')
+        })
+    }
+
+</script>

@@ -1,0 +1,187 @@
+<pre class="code_syntax" style="color:#d1d1d1;background:#000000;"><span class="line_wrapper"><span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">class</span> <span style="color:#005fd2; ">scr_npc</span> <span style="color:#d2cd86; ">:</span> MonoBehaviour</span>
+    <span class="line_wrapper"><span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Variables for performing combos</span></span>
+    <span class="line_wrapper">    <span style="color:#d2cd86; ">[</span>SerializeField<span style="color:#d2cd86; ">]</span> <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">int</span> comboIndex<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    Combo comboVal<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> SpriteRenderer icon<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Designate the movement modes of the NPC</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">enum</span> <span style="color:#005fd2; ">Movement</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        Following<span style="color:#d2cd86; ">,</span></span>
+    <span class="line_wrapper">        Dying<span style="color:#d2cd86; ">,</span></span>
+    <span class="line_wrapper">        None</span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">private</span> Movement currentMovement <span style="color:#d2cd86; ">=</span> Movement<span style="color:#d2cd86; ">.</span>None<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Movement variables, a random valyue is selected at random intervals</span></span>
+    <span class="line_wrapper">    <span style="color:#d2cd86; ">[</span>SerializeField<span style="color:#d2cd86; ">,</span> Range<span style="color:#d2cd86; ">(</span><span style="color:#009f00; ">0.1</span><span style="color:#006600; ">f</span><span style="color:#d2cd86; ">,</span> <span style="color:#009f00; ">0.25</span><span style="color:#006600; ">f</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">]</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">float</span> maxSpeed <span style="color:#d2cd86; ">=</span> <span style="color:#009f00; ">0.2</span><span style="color:#006600; ">f</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#d2cd86; ">[</span>SerializeField<span style="color:#d2cd86; ">,</span> Range<span style="color:#d2cd86; ">(</span><span style="color:#009f00; ">0.01</span><span style="color:#006600; ">f</span><span style="color:#d2cd86; ">,</span> <span style="color:#009f00; ">0.1</span><span style="color:#006600; ">f</span><span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">]</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">float</span> minSpeed <span style="color:#d2cd86; ">=</span> <span style="color:#009f00; ">0.05</span><span style="color:#006600; ">f</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#d2cd86; ">[</span>SerializeField<span style="color:#d2cd86; ">]</span> <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">float</span> maxVar<span style="color:#b060b0; ">;</span> <span style="color:#9999a9; ">//Variable variance!</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">float</span><span style="color:#d2cd86; ">,</span> <span style="color:#e66170; font-weight:bold; ">float</span><span style="color:#d2cd86; ">)</span> <span style="color:#e66170; font-weight:bold; ">var</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">float</span> currentSpeed<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> Vector3 target<span style="color:#b060b0; ">;</span> <span style="color:#9999a9; ">//Point the NPC is moving towards</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">int</span> depth<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//References to other objects</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> GameObject p<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> scr_player player<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> Transform player_pos<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//References to other components on the NPC</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> SpriteRenderer sprite<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> SpriteRenderer shadow<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Variables used in animating the sprite's bobbing animation</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> Transform iconTrans<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> Transform spriteTrans<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">float</span> aniSpeed<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#d2cd86; ">[</span>SerializeField<span style="color:#d2cd86; ">]</span> <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">float</span> pointToReach<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">float</span> baseX<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">float</span> baseY<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">int</span> upOrDown <span style="color:#d2cd86; ">=</span> <span style="color:#008c00; ">1</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Variables used in animating the sprite's frames</span></span>
+    <span class="line_wrapper">    <span style="color:#d2cd86; ">[</span>SerializeField<span style="color:#d2cd86; ">]</span> <span style="color:#e66170; font-weight:bold; ">float</span> maxAniSpeed<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">int</span> time <span style="color:#d2cd86; ">=</span> <span style="color:#008c00; ">0</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> Animator animator<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Getters and setters</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">int</span> Cv <span style="color:#b060b0; ">{</span> <span style="color:#e66170; font-weight:bold; ">get</span> <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">&gt;</span> comboIndex<span style="color:#b060b0; ">;</span> <span style="color:#e66170; font-weight:bold; ">set</span> <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">&gt;</span> comboIndex <span style="color:#d2cd86; ">=</span> value<span style="color:#b060b0; ">;</span> <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> Movement CurrentMovement <span style="color:#b060b0; ">{</span> <span style="color:#e66170; font-weight:bold; ">get</span> <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">&gt;</span> currentMovement<span style="color:#b060b0; ">;</span> <span style="color:#e66170; font-weight:bold; ">set</span> <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">&gt;</span> currentMovement <span style="color:#d2cd86; ">=</span> value<span style="color:#b060b0; ">;</span> <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">Start</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        GenerateRecruitCombo<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        InitialiseVariables<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Generate a combo needed to recruit this npc within the range of possible combos the player will have unlocked at this point</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">private</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">GenerateRecruitCombo</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>comboIndex <span style="color:#d2cd86; ">&gt;</span><span style="color:#d2cd86; ">=</span> <span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">            comboIndex <span style="color:#d2cd86; ">=</span> Random<span style="color:#d2cd86; ">.</span>Range<span style="color:#d2cd86; ">(</span><span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">,</span> Cv<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">            comboVal <span style="color:#d2cd86; ">=</span> db_combo<span style="color:#d2cd86; ">.</span>findCombo<span style="color:#d2cd86; ">(</span>comboIndex<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">            icon<span style="color:#d2cd86; ">.</span>sprite <span style="color:#d2cd86; ">=</span> comboVal<span style="color:#d2cd86; ">.</span>Image<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">            <span style="color:#9999a9; ">//Chance to flip the sprite around</span></span>
+    <span class="line_wrapper">            <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>Random<span style="color:#d2cd86; ">.</span>Range<span style="color:#d2cd86; ">(</span><span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">,</span> <span style="color:#008c00; ">2</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#008c00; ">1</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">            <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">                transform<span style="color:#d2cd86; ">.</span>localScale <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Vector2<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">-</span><span style="color:#008c00; ">1</span><span style="color:#d2cd86; ">,</span> <span style="color:#008c00; ">1</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">                iconTrans<span style="color:#d2cd86; ">.</span>localScale <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Vector2<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">-</span><span style="color:#008c00; ">1</span><span style="color:#d2cd86; ">,</span> <span style="color:#008c00; ">1</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">            <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">private</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">InitialiseVariables</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        <span style="color:#9999a9; ">//Get player variables</span></span>
+    <span class="line_wrapper">        p <span style="color:#d2cd86; ">=</span> GameObject<span style="color:#d2cd86; ">.</span>FindWithTag<span style="color:#d2cd86; ">(</span><span style="color:#02d045; ">"</span><span style="color:#00c4c4; ">player</span><span style="color:#02d045; ">"</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        player <span style="color:#d2cd86; ">=</span> p<span style="color:#d2cd86; ">.</span>GetComponent<span style="color:#d2cd86; ">&lt;</span>scr_player<span style="color:#d2cd86; ">&gt;</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        player_pos <span style="color:#d2cd86; ">=</span> p<span style="color:#d2cd86; ">.</span>GetComponent<span style="color:#d2cd86; ">&lt;</span>Transform<span style="color:#d2cd86; ">&gt;</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">        <span style="color:#9999a9; ">//Only the chaser npc needs this</span></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>GetType<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span> <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">typeof</span><span style="color:#d2cd86; ">(</span>scr_chaser_npc<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">            AIDestinationSetter dest <span style="color:#d2cd86; ">=</span> GetComponent<span style="color:#d2cd86; ">&lt;</span>AIDestinationSetter<span style="color:#d2cd86; ">&gt;</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">            <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>dest <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">            <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">                dest<span style="color:#d2cd86; ">.</span>target <span style="color:#d2cd86; ">=</span> player_pos<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">            <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">        <span style="color:#9999a9; ">//Initial variables</span></span>
+    <span class="line_wrapper">        baseX <span style="color:#d2cd86; ">=</span> spriteTrans<span style="color:#d2cd86; ">.</span>localPosition<span style="color:#d2cd86; ">.</span>x<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        baseY <span style="color:#d2cd86; ">=</span> spriteTrans<span style="color:#d2cd86; ">.</span>localPosition<span style="color:#d2cd86; ">.</span>y<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        aniSpeed <span style="color:#d2cd86; ">=</span> maxAniSpeed<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">Update</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        SetMovement<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        SetLayerOrder<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">private</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">SetMovement</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">switch</span> <span style="color:#d2cd86; ">(</span>CurrentMovement<span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">            <span style="color:#e66170; font-weight:bold; ">case</span> Movement<span style="color:#d2cd86; ">.</span>Dying<span style="color:#d2cd86; ">:</span> <span style="color:#e66170; font-weight:bold; ">break</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">            <span style="color:#e66170; font-weight:bold; ">case</span> Movement<span style="color:#d2cd86; ">.</span>Following<span style="color:#d2cd86; ">:</span></span>
+    <span class="line_wrapper">                target <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">new</span> Vector3<span style="color:#d2cd86; ">(</span>player_pos<span style="color:#d2cd86; ">.</span>position<span style="color:#d2cd86; ">.</span>x <span style="color:#d2cd86; ">+</span> <span style="color:#e66170; font-weight:bold; ">var</span><span style="color:#d2cd86; ">.</span>Item1<span style="color:#d2cd86; ">,</span> player_pos<span style="color:#d2cd86; ">.</span>position<span style="color:#d2cd86; ">.</span>y <span style="color:#d2cd86; ">+</span> <span style="color:#e66170; font-weight:bold; ">var</span><span style="color:#d2cd86; ">.</span>Item2<span style="color:#d2cd86; ">,</span> <span style="color:#008c00; ">0</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">                <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>target <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> transform<span style="color:#d2cd86; ">.</span>position<span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">                <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">                    UpdateMovement<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">                <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">                <span style="color:#e66170; font-weight:bold; ">else</span></span>
+    <span class="line_wrapper">                <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">                    transform<span style="color:#d2cd86; ">.</span>position <span style="color:#d2cd86; ">=</span> Vector2<span style="color:#d2cd86; ">.</span>MoveTowards<span style="color:#d2cd86; ">(</span>transform<span style="color:#d2cd86; ">.</span>position<span style="color:#d2cd86; ">,</span> target<span style="color:#d2cd86; ">,</span> currentSpeed<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">                <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">                BobSprite<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">                <span style="color:#e66170; font-weight:bold; ">break</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">            <span style="color:#e66170; font-weight:bold; ">case</span> Movement<span style="color:#d2cd86; ">.</span>None<span style="color:#d2cd86; ">:</span></span>
+    <span class="line_wrapper">                BobSprite<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">                <span style="color:#e66170; font-weight:bold; ">break</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Update the order in layer</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">private</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">SetLayerOrder</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        depth <span style="color:#d2cd86; ">=</span> Mathf<span style="color:#d2cd86; ">.</span>RoundToInt<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">-</span>shadow<span style="color:#d2cd86; ">.</span>transform<span style="color:#d2cd86; ">.</span>position<span style="color:#d2cd86; ">.</span>y <span style="color:#d2cd86; ">*</span> 100f<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        sprite<span style="color:#d2cd86; ">.</span>sortingOrder <span style="color:#d2cd86; ">=</span> depth<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        shadow<span style="color:#d2cd86; ">.</span>sortingOrder <span style="color:#d2cd86; ">=</span> depth<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Update the movement by providing a random speed and a random direction</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">UpdateMovement</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        currentSpeed <span style="color:#d2cd86; ">=</span> Random<span style="color:#d2cd86; ">.</span>Range<span style="color:#d2cd86; ">(</span>minSpeed<span style="color:#d2cd86; ">,</span> maxSpeed<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">float</span> inc <span style="color:#d2cd86; ">=</span> player<span style="color:#d2cd86; ">.</span>CurrentIncrease<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">var</span> <span style="color:#d2cd86; ">=</span> <span style="color:#d2cd86; ">(</span>Random<span style="color:#d2cd86; ">.</span>Range<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">-</span>maxVar <span style="color:#d2cd86; ">*</span> inc<span style="color:#d2cd86; ">,</span> maxVar <span style="color:#d2cd86; ">*</span> inc<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">,</span> Random<span style="color:#d2cd86; ">.</span>Range<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">-</span>maxVar <span style="color:#d2cd86; ">*</span> inc<span style="color:#d2cd86; ">,</span> maxVar <span style="color:#d2cd86; ">*</span> inc<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Triggered after being recruited</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">BeginFollowing</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        CurrentMovement <span style="color:#d2cd86; ">=</span> Movement<span style="color:#d2cd86; ">.</span>Following<span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        Destroy<span style="color:#d2cd86; ">(</span>icon<span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        UpdateMovement<span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">        <span style="color:#9999a9; ">//Only special NPCs have a dance animation</span></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span>animator <span style="color:#d2cd86; ">!</span><span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">null</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">            animator<span style="color:#d2cd86; ">.</span>enabled <span style="color:#d2cd86; ">=</span> <span style="color:#e66170; font-weight:bold; ">true</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Only performs code for the chaser npc inherited class</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">protected</span> <span style="color:#e66170; font-weight:bold; ">virtual</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">BobSprite</span><span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">)</span> <span style="color:#b060b0; ">{</span> <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Collision properties</span></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Triggers when this npc enters the players aura, allowing them to be recruited </span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">OnTriggerEnter2D</span><span style="color:#d2cd86; ">(</span>Collider2D collision<span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">(</span>collision<span style="color:#d2cd86; ">.</span>isTrigger<span style="color:#d2cd86; ">)</span> &amp;&amp; <span style="color:#d2cd86; ">(</span>CurrentMovement <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> Movement<span style="color:#d2cd86; ">.</span>None<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">            player<span style="color:#d2cd86; ">.</span>addToNPCList<span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span>
+    <span class="line_wrapper">    <span style="color:#9999a9; ">//Triggers when this npc exits the players aura</span></span>
+    <span class="line_wrapper">    <span style="color:#e66170; font-weight:bold; ">public</span> <span style="color:#e66170; font-weight:bold; ">void</span> <span style="color:#005fd2; ">OnTriggerExit2D</span><span style="color:#d2cd86; ">(</span>Collider2D collision<span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">        <span style="color:#e66170; font-weight:bold; ">if</span> <span style="color:#d2cd86; ">(</span><span style="color:#d2cd86; ">(</span>collision<span style="color:#d2cd86; ">.</span>isTrigger<span style="color:#d2cd86; ">)</span> &amp;&amp; <span style="color:#d2cd86; ">(</span>CurrentMovement <span style="color:#d2cd86; ">=</span><span style="color:#d2cd86; ">=</span> Movement<span style="color:#d2cd86; ">.</span>None<span style="color:#d2cd86; ">)</span><span style="color:#d2cd86; ">)</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">{</span></span>
+    <span class="line_wrapper">            player<span style="color:#d2cd86; ">.</span>removeFromNPCList<span style="color:#d2cd86; ">(</span><span style="color:#e66170; font-weight:bold; ">this</span><span style="color:#d2cd86; ">)</span><span style="color:#b060b0; ">;</span></span>
+    <span class="line_wrapper">        <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper">    <span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"><span style="color:#b060b0; ">}</span></span>
+    <span class="line_wrapper"></span></pre>

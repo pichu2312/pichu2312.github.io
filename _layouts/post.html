@@ -1,31 +1,26 @@
 ---
 layout: default
 ---
+{% include top_bar.html %}
 
-<a href="{{ "/" | relative_url }}">{{ site.theme_config.back_home_text }}</a>
+<a class = "backlink" onclick="history.back()">back..</a>
 <h1 class="post-title">{{ page.title }}</h1>
 {% include date_and_social_share.html %}
 {% assign contentArray = page.content | markdownify | split: "<!--more-->" %}
-{{contentArray.first}}
-<h2>Game Background</h2>
-{{contentArray.last}}
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">.col-lg-4</div>
-        <div class="col-sm-4">.col-lg-4</div>
-        <div class="col-sm-4">.col-lg-4</div>
-    </div>
-</div>
 
 <div class="row gtr-200">
     <div class="col-3 col-12-medium">
         <div id="sidebar">
 
-            <!-- Sidebar -->
-            <section>
-                <h2>{{page.title}}</h2>
-                <a href="#" class="image featured"><img src="/images/{{page.image}}" alt="" /></a>
+            <!-- Sidebar -->    
+            <section class = "imagegallery">
+                <div class="expandable">    
+                <a href="/images/screenshots/{{page.screenshot1}}" class="image featured"><img src="/images/screenshots/{{page.screenshot1}}" alt="" /></a>
+                <a href="/images/screenshots/{{page.screenshot2}}" class="image featured"><img src="/images/screenshots/{{page.screenshot2}}" alt="" /></a>
+                <a href="/images/screenshots/{{page.screenshot3}}" class="image featured"><img src="/images/screenshots/{{page.screenshot3}}" alt="" /></a>
+                </div>
+                <a class = "more"></a>
+
                 <footer>
                     <a href="{{page.download_link}}" target="_blank" rel="noopener noreferrer"
                         class="button icon fa-play-circle">Play here!</a>
@@ -69,3 +64,4 @@ layout: default
         </div>
     </div>
 </div>
+{% include bottom_bar.html %}

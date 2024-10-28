@@ -1,0 +1,189 @@
+<!-- HTML generated using hilite.me --><div style="background: #202020; overflow:auto;width:auto;background: black; padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">class</span> <span style="color: #447fcf; text-decoration: underline">scr_npc</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">MonoBehaviour</span>
+    <span style="color: #d0d0d0">{</span>
+        <span style="color: #999999; font-style: italic">//Variables for performing combos</span>
+    <span style="color: #bbbbbb">    [SerializeField]</span> <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">comboIndex;</span>
+        <span style="color: #d0d0d0">Combo</span> <span style="color: #d0d0d0">comboVal;</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">SpriteRenderer</span> <span style="color: #d0d0d0">icon;</span>
+    
+        <span style="color: #999999; font-style: italic">//Designate the movement modes of the NPC</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">enum</span> <span style="color: #d0d0d0">Movement</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">Following,</span>
+            <span style="color: #d0d0d0">Dying,</span>
+            <span style="color: #d0d0d0">None</span>
+        <span style="color: #d0d0d0">}</span>
+        <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #d0d0d0">Movement</span> <span style="color: #d0d0d0">currentMovement</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Movement.None;</span>
+    
+        <span style="color: #999999; font-style: italic">//Movement variables, a random value is selected at random intervals</span>
+    <span style="color: #bbbbbb">    [SerializeField, Range(0.1f, 0.25f)]</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">maxSpeed</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0.2f</span><span style="color: #d0d0d0">;</span>
+    <span style="color: #bbbbbb">    [SerializeField, Range(0.01f, 0.1f)]</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">minSpeed</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0.05f</span><span style="color: #d0d0d0">;</span>
+    <span style="color: #bbbbbb">    [SerializeField]</span> <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">maxVar;</span> <span style="color: #999999; font-style: italic">//Variable variance!</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #d0d0d0">(</span><span style="color: #6ab825; font-weight: bold">float</span><span style="color: #d0d0d0">,</span> <span style="color: #6ab825; font-weight: bold">float</span><span style="color: #d0d0d0">)</span> <span style="color: #6ab825; font-weight: bold">var</span><span style="color: #d0d0d0">;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">currentSpeed;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #d0d0d0">Vector3</span> <span style="color: #d0d0d0">target;</span> <span style="color: #999999; font-style: italic">//Point the NPC is moving towards</span>
+        <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">depth;</span>
+    
+        <span style="color: #999999; font-style: italic">//References to other objects</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #d0d0d0">GameObject</span> <span style="color: #d0d0d0">p;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #d0d0d0">scr_player</span> <span style="color: #d0d0d0">player;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #d0d0d0">Transform</span> <span style="color: #d0d0d0">player_pos;</span>
+    
+        <span style="color: #999999; font-style: italic">//References to other components on the NPC</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">SpriteRenderer</span> <span style="color: #d0d0d0">sprite;</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">SpriteRenderer</span> <span style="color: #d0d0d0">shadow;</span>
+    
+        <span style="color: #999999; font-style: italic">//Variables used in animating the sprite&#39;s bobbing animation</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">Transform</span> <span style="color: #d0d0d0">iconTrans;</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">Transform</span> <span style="color: #d0d0d0">spriteTrans;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">aniSpeed;</span>
+    <span style="color: #bbbbbb">    [SerializeField]</span> <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">pointToReach;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">baseX;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">baseY;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">upOrDown</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">;</span>
+    
+        <span style="color: #999999; font-style: italic">//Variables used in animating the sprite&#39;s frames</span>
+    <span style="color: #bbbbbb">    [SerializeField]</span> <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">maxAniSpeed;</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">time</span> <span style="color: #d0d0d0">=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">;</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">Animator</span> <span style="color: #d0d0d0">animator;</span>
+    
+        <span style="color: #999999; font-style: italic">//Getters and setters</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">Cv</span> <span style="color: #d0d0d0">{</span> <span style="color: #6ab825; font-weight: bold">get</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #d0d0d0">comboIndex;</span> <span style="color: #6ab825; font-weight: bold">set</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #d0d0d0">comboIndex</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">value</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">}</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">Movement</span> <span style="color: #d0d0d0">CurrentMovement</span> <span style="color: #d0d0d0">{</span> <span style="color: #6ab825; font-weight: bold">get</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #d0d0d0">currentMovement;</span> <span style="color: #6ab825; font-weight: bold">set</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #d0d0d0">currentMovement</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">value</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">Start</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">GenerateRecruitCombo();</span>
+            <span style="color: #d0d0d0">InitialiseVariables();</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #999999; font-style: italic">//Generate a combo needed to recruit this npc within the range of possible combos </span>
+        <span style="color: #999999; font-style: italic">//the player will have unlocked at this point</span>
+        <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">GenerateRecruitCombo</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(comboIndex</span> <span style="color: #d0d0d0">&gt;=</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span>
+            <span style="color: #d0d0d0">{</span>
+                <span style="color: #d0d0d0">comboIndex</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Random.Range(</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #d0d0d0">Cv);</span>
+                <span style="color: #d0d0d0">comboVal</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">db_combo.findCombo(comboIndex);</span>
+                <span style="color: #d0d0d0">icon.sprite</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">comboVal.Image;</span>
+    
+                <span style="color: #999999; font-style: italic">//Chance to flip the sprite around</span>
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(Random.Range(</span><span style="color: #3677a9">0</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">2</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">)</span>
+                <span style="color: #d0d0d0">{</span>
+                    <span style="color: #d0d0d0">transform.localScale</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">new</span> <span style="color: #d0d0d0">Vector2(-</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+                    <span style="color: #d0d0d0">iconTrans.localScale</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">new</span> <span style="color: #d0d0d0">Vector2(-</span><span style="color: #3677a9">1</span><span style="color: #d0d0d0">,</span> <span style="color: #3677a9">1</span><span style="color: #d0d0d0">);</span>
+                <span style="color: #d0d0d0">}</span>
+            <span style="color: #d0d0d0">}</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">InitialiseVariables</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #999999; font-style: italic">//Get player variables</span>
+            <span style="color: #d0d0d0">p</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">GameObject.FindWithTag(</span><span style="color: #ed9d13">&quot;player&quot;</span><span style="color: #d0d0d0">);</span>
+            <span style="color: #d0d0d0">player</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">p.GetComponent&lt;scr_player&gt;();</span>
+            <span style="color: #d0d0d0">player_pos</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">p.GetComponent&lt;Transform&gt;();</span>
+    
+            <span style="color: #999999; font-style: italic">//Only the chaser npc needs this</span>
+            <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(GetType()</span> <span style="color: #d0d0d0">==</span> <span style="color: #6ab825; font-weight: bold">typeof</span><span style="color: #d0d0d0">(scr_chaser_npc))</span>
+            <span style="color: #d0d0d0">{</span>
+                <span style="color: #d0d0d0">AIDestinationSetter</span> <span style="color: #d0d0d0">dest</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">GetComponent&lt;AIDestinationSetter&gt;();</span>
+    
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(dest</span> <span style="color: #d0d0d0">!=</span> <span style="color: #6ab825; font-weight: bold">null</span><span style="color: #d0d0d0">)</span>
+                <span style="color: #d0d0d0">{</span>
+                    <span style="color: #d0d0d0">dest.target</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">player_pos;</span>
+                <span style="color: #d0d0d0">}</span>
+            <span style="color: #d0d0d0">}</span>
+    
+            <span style="color: #999999; font-style: italic">//Initial variables</span>
+            <span style="color: #d0d0d0">baseX</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">spriteTrans.localPosition.x;</span>
+            <span style="color: #d0d0d0">baseY</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">spriteTrans.localPosition.y;</span>
+            <span style="color: #d0d0d0">aniSpeed</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">maxAniSpeed;</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">Update</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">SetMovement();</span>
+            <span style="color: #d0d0d0">SetLayerOrder();</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">SetMovement</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #6ab825; font-weight: bold">switch</span> <span style="color: #d0d0d0">(CurrentMovement)</span>
+            <span style="color: #d0d0d0">{</span>
+                <span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #d0d0d0">Movement.Dying:</span> <span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+                <span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #d0d0d0">Movement.Following:</span>
+                    <span style="color: #d0d0d0">target</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">new</span> <span style="color: #d0d0d0">Vector3(player_pos.position.x</span> <span style="color: #d0d0d0">+</span> <span style="color: #6ab825; font-weight: bold">var</span><span style="color: #d0d0d0">.Item1,</span> <span style="color: #d0d0d0">player_pos.position.y</span> <span style="color: #d0d0d0">+</span> <span style="color: #6ab825; font-weight: bold">var</span><span style="color: #d0d0d0">.Item2,</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">);</span>
+    
+                    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(target</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">transform.position)</span>
+                    <span style="color: #d0d0d0">{</span>
+                        <span style="color: #d0d0d0">UpdateMovement();</span>
+                    <span style="color: #d0d0d0">}</span>
+                    <span style="color: #6ab825; font-weight: bold">else</span>
+                    <span style="color: #d0d0d0">{</span>
+                        <span style="color: #d0d0d0">transform.position</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Vector2.MoveTowards(transform.position,</span> <span style="color: #d0d0d0">target,</span> <span style="color: #d0d0d0">currentSpeed);</span>
+                    <span style="color: #d0d0d0">}</span>
+    
+                    <span style="color: #d0d0d0">BobSprite();</span>
+                    <span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+                <span style="color: #6ab825; font-weight: bold">case</span> <span style="color: #d0d0d0">Movement.None:</span>
+                    <span style="color: #d0d0d0">BobSprite();</span>
+                    <span style="color: #6ab825; font-weight: bold">break</span><span style="color: #d0d0d0">;</span>
+            <span style="color: #d0d0d0">}</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #999999; font-style: italic">//Update the order in layer</span>
+        <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">SetLayerOrder</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">depth</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Mathf.RoundToInt(-shadow.transform.position.y</span> <span style="color: #d0d0d0">*</span> <span style="color: #3677a9">100f</span><span style="color: #d0d0d0">);</span>
+            <span style="color: #d0d0d0">sprite.sortingOrder</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">depth;</span>
+            <span style="color: #d0d0d0">shadow.sortingOrder</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">depth;</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #999999; font-style: italic">//Update the movement by providing a random speed and a random direction</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">UpdateMovement</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">currentSpeed</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Random.Range(minSpeed,</span> <span style="color: #d0d0d0">maxSpeed);</span>
+            <span style="color: #6ab825; font-weight: bold">float</span> <span style="color: #d0d0d0">inc</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">player.CurrentIncrease;</span>
+    
+            <span style="color: #6ab825; font-weight: bold">var</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(Random.Range(-maxVar</span> <span style="color: #d0d0d0">*</span> <span style="color: #d0d0d0">inc,</span> <span style="color: #d0d0d0">maxVar</span> <span style="color: #d0d0d0">*</span> <span style="color: #d0d0d0">inc),</span> <span style="color: #d0d0d0">Random.Range(-maxVar</span> <span style="color: #d0d0d0">*</span> <span style="color: #d0d0d0">inc,</span> <span style="color: #d0d0d0">maxVar</span> <span style="color: #d0d0d0">*</span> <span style="color: #d0d0d0">inc));</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #999999; font-style: italic">//Triggered after being recruited</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">BeginFollowing</span><span style="color: #d0d0d0">()</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">CurrentMovement</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Movement.Following;</span>
+            <span style="color: #d0d0d0">Destroy(icon);</span>
+            <span style="color: #d0d0d0">UpdateMovement();</span>
+    
+            <span style="color: #999999; font-style: italic">//Only special NPCs have a dance animation</span>
+            <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(animator</span> <span style="color: #d0d0d0">!=</span> <span style="color: #6ab825; font-weight: bold">null</span><span style="color: #d0d0d0">)</span>
+            <span style="color: #d0d0d0">{</span>
+                <span style="color: #d0d0d0">animator.enabled</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">true</span><span style="color: #d0d0d0">;</span>
+            <span style="color: #d0d0d0">}</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #999999; font-style: italic">//Only performs code for the chaser npc inherited class</span>
+        <span style="color: #6ab825; font-weight: bold">protected</span> <span style="color: #6ab825; font-weight: bold">virtual</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">BobSprite</span><span style="color: #d0d0d0">()</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #999999; font-style: italic">//Collision properties</span>
+        <span style="color: #999999; font-style: italic">//Triggers when this npc enters the players aura, allowing them to be recruited </span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">OnTriggerEnter2D</span><span style="color: #d0d0d0">(Collider2D</span> <span style="color: #d0d0d0">collision)</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">((collision.isTrigger)</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">(CurrentMovement</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">Movement.None))</span>
+            <span style="color: #d0d0d0">{</span>
+                <span style="color: #d0d0d0">player.addToNPCList(</span><span style="color: #6ab825; font-weight: bold">this</span><span style="color: #d0d0d0">);</span>
+            <span style="color: #d0d0d0">}</span>
+        <span style="color: #d0d0d0">}</span>
+    
+        <span style="color: #999999; font-style: italic">//Triggers when this npc exits the players aura</span>
+        <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #6ab825; font-weight: bold">void</span> <span style="color: #447fcf">OnTriggerExit2D</span><span style="color: #d0d0d0">(Collider2D</span> <span style="color: #d0d0d0">collision)</span>
+        <span style="color: #d0d0d0">{</span>
+            <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">((collision.isTrigger)</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">(CurrentMovement</span> <span style="color: #d0d0d0">==</span> <span style="color: #d0d0d0">Movement.None))</span>
+            <span style="color: #d0d0d0">{</span>
+                <span style="color: #d0d0d0">player.removeFromNPCList(</span><span style="color: #6ab825; font-weight: bold">this</span><span style="color: #d0d0d0">);</span>
+            <span style="color: #d0d0d0">}</span>
+        <span style="color: #d0d0d0">}</span>
+    <span style="color: #d0d0d0">}</span>
+    </pre></div>
+    

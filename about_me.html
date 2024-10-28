@@ -8,22 +8,17 @@ layout: default
     <!-- Tab links -->
     <!-- From https://www.w3schools.com/howto/howto_js_tabs.asp-->
     <div class="tab">
-        <button class="tablinks" onclick="openCity(event, 'Bio')" id="defaultOpen">Bio</button>
-        <button class="tablinks" onclick="openCity(event, 'Influences')">Influences</button>
-        <button class="tablinks" onclick="openCity(event, 'Epic_Facts')">Cool Facts</button>
+        <a class="button tablinks active" onclick="openTab(event, 'background')">Background</a>
+        <a class="button tablinks" onclick="openTab(event, 'influences')">Influences</a>
+        <a class="button tablinks" onclick="openTab(event, 'epic_facts')">Cool Facts</a>
     </div>
 
-    <script>
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
-    </script>
-
     <!-- Tab content -->
-    <div id="Bio" class="tabcontent">
+    <div id="background" class="tabcontent" style="display:block">
         <!-- Content -->
         <article>
 
-            <h2>Bio</h2>
+            <h2>Background</h2>
             <p>Heyo, I'm <b>Jacob</b>. So this page is just me writing some background on who I am and
                 how
                 I got into designing video games, if you want the short version of this then
@@ -93,7 +88,7 @@ layout: default
                 all the way to here, hire me! please!</p>
     </div>
 
-    <div id="Influences" class="tabcontent">
+    <div id="influences" class="tabcontent">
         <h2>Influences</h2>
         <p>I believe experiencing and appreciating art is one of the best parts of being alive,
             I'm therefore VERY attached to works which have affected me in some way. Here's a
@@ -136,7 +131,7 @@ layout: default
 
     </div>
 
-    <div id="Epic_Facts" class="tabcontent">
+    <div id="epic_facts" class="tabcontent">
         <h2>Cool Facts</h2>
         <section>
             <ul>
@@ -162,3 +157,26 @@ layout: default
         </section>
     </div>
 {% include bottom_bar.html %}
+
+<script>
+function openTab(evt, tab) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tab).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
