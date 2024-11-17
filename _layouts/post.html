@@ -12,20 +12,7 @@ layout: default
     <div class="col-3 col-12-medium">
         <div id="sidebar">
 
-            <!-- Sidebar -->    
-            <section class = "imagegallery">
-                <div class="expandable">    
-                <a href="/images/screenshots/{{page.screenshot1}}" class="image featured"><img src="/images/screenshots/{{page.screenshot1}}" alt="" /></a>
-                <a href="/images/screenshots/{{page.screenshot2}}" class="image featured"><img src="/images/screenshots/{{page.screenshot2}}" alt="" /></a>
-                <a href="/images/screenshots/{{page.screenshot3}}" class="image featured"><img src="/images/screenshots/{{page.screenshot3}}" alt="" /></a>
-                </div>
-                <a class = "more"></a>
 
-                <footer>
-                    <a href="{{page.download_link}}" target="_blank" rel="noopener noreferrer"
-                        class="button icon fa-play-circle">Play here!</a>
-                </footer>
-            </section>
 
             <section>
                 <h3>Details</h3>
@@ -42,7 +29,11 @@ layout: default
                     <li>
                         <p>{{page.genre}}</p>
                     </li>
+
                 </ul>
+                <p style="padding-top: 2%;"></p>
+                <a href="{{page.download_link}}" target="_blank" rel="noopener noreferrer"
+                class="button icon fa-play-circle">Play here!</a>
             </section>
 
         </div>
@@ -57,11 +48,28 @@ layout: default
                 <!--help from https://stackoverflow.com/questions/26395044/jekyll-how-to-split-content-defined-in-md-file-into-separate-elements-->
                 {% assign contentArray = page.content | markdownify | split: "<!--more-->" %}
                 {{contentArray.first}}
+                {% if contentArray.size != 1 %}
+
                 <h2>Game Background</h2>
                 {{contentArray.last}}
+                {% endif %}
             </article>
 
         </div>
+        {% if page.screenshot1 %}
+                <h2>Screenshots</h2>
+
+                    <!-- Sidebar -->    
+                    <section class = "imagegallery">
+                        <div class="expandable">    
+                        <a href="/images/screenshots/{{page.screenshot1}}" class="image featured"><img src="/images/screenshots/{{page.screenshot1}}" alt="" /></a>
+                        <a href="/images/screenshots/{{page.screenshot2}}" class="image featured"><img src="/images/screenshots/{{page.screenshot2}}" alt="" /></a>
+                        <a href="/images/screenshots/{{page.screenshot3}}" class="image featured"><img src="/images/screenshots/{{page.screenshot3}}" alt="" /></a>
+                        </div>
+                        <a class = "more"></a>
+        
+                    </section>
+            {% endif %}
     </div>
 </div>
 {% include bottom_bar.html %}

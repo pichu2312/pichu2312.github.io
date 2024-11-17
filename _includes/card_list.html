@@ -18,7 +18,7 @@
         <p class="body">
           {{ post.bio }}
         </p>
-        <a href={{post.url}} class="image featured"><img src={{ "images/" | append: post.image }}/></a>
+        <a href={{post.url}} class="image featured"><img src= "images/{{post.image}}"/></a>
         <h2>{% assign new_var = "images/" | append: post.image %}</h2>
 
         {% endif %}
