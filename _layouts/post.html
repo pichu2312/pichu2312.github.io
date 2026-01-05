@@ -15,6 +15,13 @@ layout: default
 
 
             <section>
+                {% if page.video %}
+                <iframe width="420" height="315"
+
+                    src="{{page.video}}">
+                </iframe>
+                {% endif %}
+
                 <h3>Details</h3>
                 <ul class="game_details">
                     <li>
@@ -32,8 +39,11 @@ layout: default
 
                 </ul>
                 <p style="padding-top: 2%;"></p>
+                {% if page.download_link %}
                 <a href="{{page.download_link}}" target="_blank" rel="noopener noreferrer"
+
                 class="button icon fa-play-circle">Play here!</a>
+                {% endif %}
             </section>
 
         </div>
@@ -54,6 +64,10 @@ layout: default
                 {{contentArray.last}}
                 {% endif %}
             </article>
+        
+        {% if page.document %}
+        <embed src="{{page.document}}" width="100%" height="1000" type="application/pdf">
+        {%endif%}
 
         </div>
         {% if page.screenshot1 %}

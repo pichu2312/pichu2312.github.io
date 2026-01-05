@@ -15,6 +15,8 @@ excerpt_separator: "<!--more-->"
 screenshot1: fish1.png
 screenshot2: fish2.png
 screenshot3: fish3.png
+
+document: diss.pdf
 ---
 
 Fish and Sleep is a gamified sleep assistance app that uses catching and raising fish to incentivise you to wake up and go to sleep. It was created as part of my dissertation at the University of Birmingham alongside a report which you can read here: . The dissertation was awarded a first.
@@ -28,3 +30,5 @@ By my third year of University, I had grown far more interested in game developm
 I learned a lot about Android development and mobile development in general. Creating the game itself was straightforward, but the aims of the project required interaction with a phone's inbuilt features such as; detection of user activity, time management, notifications etc. I'm happy that I was able to use my dissertation to further my game development goals while still achieving a first-class degree. 
 
 I'd also like to thank my supervisor Dr. Alexander Krull for his assistance on the project.
+
+You can read the full dissertation below if you're so inclined.

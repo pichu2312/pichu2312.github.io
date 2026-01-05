@@ -32,7 +32,20 @@ layout: default
 <a class = "button" href = "/portfolio">See all</a>
 </div>
 <div class="expandable">
+
 <h2>Skills</h2>
+Some of the Languages, Tools and Engines I have experience in. I'm most familiar with Unity and programming in C#.
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-content">
+      {% include skills.html %}
+    </div>
+    <div class="marquee-content">
+      {% include skills.html %}
+    </div>
+  </div>
+</div>
+
 <div class="content">
 {% include vertical_list.html collection=site.data.home.skills %}
 </div>

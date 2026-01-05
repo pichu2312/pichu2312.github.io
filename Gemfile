@@ -3,4 +3,5 @@
 source "https://rubygems.org"
 gemspec
 
-gem 'bootstrap', '~> 5.3.3'
+gem "jekyll", "~> 4.2.2"
+gem "liquid", ">= 4.0.4"
