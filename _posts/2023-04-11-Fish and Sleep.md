@@ -1,7 +1,7 @@
 ---
 layout: post
 image: fish.png
-download_link: https://play.google.com/store/apps/details?id=jukstudios.main.fishingproject
+download_link: files/fish-app-release.apk
 
 created_with: Java
 playable_on: on Android Phones
